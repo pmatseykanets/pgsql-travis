@@ -1,25 +1,35 @@
 language: php
+
 php:
   - '5.6'
   - '7.0'
 
-addons:
-  postgresql: "9.3"
-
-  services:
-  - postgresql
+cache:
+    directories:
+      - vendor
+      - $HOME/.composer/cache
 
 env:
   global:
-  - DB_USERNAME=postgres
-  - DB_PASSWORD=
-  - APP_ENV=testing
-  - APP_KEY=w6wDg7M2yTH45W6szvJS0ViF5T11m3Ig
+    - DB_USERNAME=postgres
+    - DB_PASSWORD=
+    - APP_ENV=testing
+    - APP_KEY=w6wDg7M2yTH45W6szvJS0ViF5T11m3Ig
+
+addons:
+  postgresql: '9.4'
+
+services:
+  - postgresql
+
+before_install:
+  - travis_retry composer self-update
+
+install:
+  - composer install --no-interaction --no-progress
 
 before_script:
-  - travis_retry composer self-update
-  - composer install
-  - psql -c 'create database app_test;' -U postgres
+  - psql -c 'create database thinker_test;' -U postgres
   - php artisan migrate --database=pgsql_test --env=testing --force
 
 script:
