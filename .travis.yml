@@ -9,6 +9,12 @@ addons:
   services:
   - postgresql
 
+env:
+  global:
+  - DB_USERNAME=postgres
+  - DB_PASSWORD=
+  - APP_ENV=testing
+  - APP_KEY=w6wDg7M2yTH45W6szvJS0ViF5T11m3Ig
 
 before_script:
   - travis_retry composer self-update
