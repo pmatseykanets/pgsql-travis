@@ -13,8 +13,8 @@ addons:
 before_script:
   - travis_retry composer self-update
   - composer install
-  - psql -c 'create database app_test;' -U homestead
-  - php artisan migrate
+  - psql -c 'create database app_test;' -U postgres
+  - php artisan migrate --database=pgsql_test
 
 script:
  - phpunit --coverage-text --coverage-clover=coverage.clover
